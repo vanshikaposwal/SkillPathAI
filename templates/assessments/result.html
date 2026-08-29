@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Assessment Result — Career PathFinder{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-4">
+    <div class="col-lg-8">
+        <div class="saas-card p-4 p-md-5 mb-4 text-center">
+            {% if passed %}
+                <div class="bg-success text-white rounded-circle d-inline-flex p-3 mb-3">
+                    <i class="bi bi-trophy-fill fs-1"></i>
+                </div>
+                <h2 class="fw-bold text-success">Congratulations! You Passed!</h2>
+                <p class="text-muted">You achieved <strong>{{ score }}%</strong> ({{ correct_count }} of {{ total }} correct).</p>
+                <div class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 fs-6 rounded-pill mb-4">
+                    <i class="bi bi-check2-circle me-1"></i> Milestone verified & marked complete in your roadmap!
+                </div>
+            {% else %}
+                <div class="bg-danger text-white rounded-circle d-inline-flex p-3 mb-3">
+                    <i class="bi bi-exclamation-octagon-fill fs-1"></i>
+                </div>
+                <h2 class="fw-bold text-danger">Needs Review ({{ score }}%)</h2>
+                <p class="text-muted">Passing threshold is {{ assessment.passing_score }}%. Review the detailed explanations below to strengthen your understanding.</p>
+            {% endif %}
+
+            <div class="d-flex justify-content-center gap-3">
+                <a href="{% url 'roadmap' %}" class="btn btn-primary-custom px-4">
+                    <i class="bi bi-map me-1"></i> Back to Roadmap
+                </a>
+                <a href="{% url 'assessment_take' pk=assessment.id %}" class="btn btn-outline-secondary px-3">
+                    <i class="bi bi-arrow-repeat me-1"></i> Retake Assessment
+                </a>
+            </div>
+        </div>
+
+        <!-- Question By Question Review -->
+        <h4 class="fw-bold mb-3">Question Explanations & Concept Review</h4>
+        {% for r in results %}
+        <div class="saas-card p-4 mb-3 border-start border-4 {% if r.is_correct %}border-success{% else %}border-danger{% endif %}">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="fw-bold mb-0">Q{{ forloop.counter }}. {{ r.question.question }}</h6>
+                {% if r.is_correct %}
+                    <span class="badge bg-success">Correct (+1)</span>
+                {% else %}
+                    <span class="badge bg-danger">Incorrect (Selected {{ r.user_answer }})</span>
+                {% endif %}
+            </div>
+            <div class="small text-muted mb-2">
+                Correct Answer: <strong class="text-success">Option {{ r.question.correct_answer }}</strong>
+            </div>
+            <div class="p-3 bg-light rounded-3 text-secondary small border">
+                <strong><i class="bi bi-lightbulb-fill text-warning me-1"></i>Concept Explanation:</strong>
+                {{ r.question.explanation }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

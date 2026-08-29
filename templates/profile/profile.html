@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}Learner Profile & Goals — Career PathFinder{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1"><i class="bi bi-person-gear text-primary me-2"></i>Learner Profile & Settings</h2>
+        <p class="text-muted mb-0">Manage your career ambition, weekly study schedule, and known skills.</p>
+    </div>
+    <div class="d-flex gap-2 mt-3 mt-md-0">
+        <form method="post" action="{% url 'regenerate_path' %}" onsubmit="return confirm('Regenerate your roadmap with updated profile parameters?');">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-warning fw-bold shadow-sm">
+                <i class="bi bi-magic me-1"></i> Regenerate Learning Path
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="saas-card p-4">
+            <h5 class="fw-bold mb-3 border-bottom pb-2">Profile & Study Preferences</h5>
+            
+            <form method="post" action="{% url 'edit_profile' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Career Goal</label>
+                    <input type="text" name="career_goal" class="form-control" value="{{ profile.career_goal }}" required>
+                </div>
+                
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Experience Level</label>
+                        <select name="experience_level" class="form-select">
+                            <option value="Beginner" {% if profile.experience_level == 'Beginner' %}selected{% endif %}>Beginner</option>
+                            <option value="Intermediate" {% if profile.experience_level == 'Intermediate' %}selected{% endif %}>Intermediate</option>
+                            <option value="Advanced" {% if profile.experience_level == 'Advanced' %}selected{% endif %}>Advanced</option>
+                            <option value="Professional" {% if profile.experience_level == 'Professional' %}selected{% endif %}>Professional</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Weekly Study Hours</label>
+                        <select name="weekly_hours" class="form-select">
+                            <option value="1-5" {% if profile.weekly_hours == '1-5' %}selected{% endif %}>1–5 hours</option>
+                            <option value="5-10" {% if profile.weekly_hours == '5-10' %}selected{% endif %}>5–10 hours</option>
+                            <option value="10-15" {% if profile.weekly_hours == '10-15' %}selected{% endif %}>10–15 hours</option>
+                            <option value="15-20" {% if profile.weekly_hours == '15-20' %}selected{% endif %}>15–20 hours</option>
+                            <option value="20+" {% if profile.weekly_hours == '20+' %}selected{% endif %}>20+ hours</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Target Timeline</label>
+                        <select name="target_timeline" class="form-select">
+                            <option value="1 month" {% if profile.target_timeline == '1 month' %}selected{% endif %}>1 Month</option>
+                            <option value="3 months" {% if profile.target_timeline == '3 months' %}selected{% endif %}>3 Months</option>
+                            <option value="6 months" {% if profile.target_timeline == '6 months' %}selected{% endif %}>6 Months</option>
+                            <option value="1 year" {% if profile.target_timeline == '1 year' %}selected{% endif %}>1 Year</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Learning Style</label>
+                        <select name="learning_style" class="form-select">
+                            <option value="Mixed" {% if profile.learning_style == 'Mixed' %}selected{% endif %}>Mixed</option>
+                            <option value="Videos" {% if profile.learning_style == 'Videos' %}selected{% endif %}>Videos</option>
+                            <option value="Reading" {% if profile.learning_style == 'Reading' %}selected{% endif %}>Reading</option>
+                            <option value="Practice" {% if profile.learning_style == 'Practice' %}selected{% endif %}>Practice</option>
+                            <option value="Projects" {% if profile.learning_style == 'Projects' %}selected{% endif %}>Projects</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Interests</label>
+                    <textarea name="interests" rows="2" class="form-control">{{ profile.interests }}</textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Learning History</label>
+                    <textarea name="learning_history" rows="2" class="form-control">{{ profile.learning_history }}</textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary-custom px-4">Save Profile Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Skills List -->
+    <div class="col-lg-5">
+        <div class="saas-card p-4">
+            <h5 class="fw-bold mb-3 border-bottom pb-2">Your Registered Skills</h5>
+            <div class="d-flex flex-column gap-2 mb-4">
+                {% for us in user_skills %}
+                <div class="p-2 px-3 border rounded-3 bg-light d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong class="d-block">{{ us.skill.name }}</strong>
+                        <small class="text-muted">{{ us.skill.category }}</small>
+                    </div>
+                    <span class="badge bg-primary">{{ us.proficiency }}</span>
+                </div>
+                {% empty %}
+                <p class="text-muted small">No skills registered yet.</p>
+                {% endfor %}
+            </div>
+
+            <a href="{% url 'onboarding_step' step=3 %}" class="btn btn-outline-primary btn-sm w-100">
+                <i class="bi bi-plus-circle me-1"></i> Update Skills in Wizard
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

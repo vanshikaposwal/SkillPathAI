@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard — Career PathFinder{% endblock %}
+
+{% block content %}
+<!-- Welcome Header -->
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1">Welcome back, {{ user.first_name|default:user.username }}! 👋</h2>
+        <p class="text-muted mb-0">Target Career: <strong class="text-primary">{{ profile.career_goal }}</strong> ({{ profile.experience_level }} level, {{ profile.weekly_hours }} hrs/wk)</p>
+    </div>
+    <div class="d-flex gap-2 mt-3 mt-md-0">
+        <a href="{% url 'ai_assistant' %}" class="btn btn-outline-primary d-flex align-items-center gap-1">
+            <i class="bi bi-robot"></i> Ask AI Mentor
+        </a>
+        <a href="{% url 'roadmap' %}" class="btn btn-primary-custom d-flex align-items-center gap-1">
+            <i class="bi bi-map"></i> View Full Roadmap
+        </a>
+    </div>
+</div>
+
+<!-- SECTION 1: PROMINENT NEXT BEST ACTION CARD -->
+<div class="nba-card p-4 mb-4">
+    <div class="row align-items-center">
+        <div class="col-lg-8">
+            <div class="badge bg-warning text-dark fw-bold px-3 py-1 rounded-pill mb-2">
+                <i class="bi bi-lightning-charge-fill me-1"></i> YOUR NEXT BEST ACTION
+            </div>
+            <h3 class="fw-bold mb-2 text-white">{{ next_best_action.title|default:"Explore Core Backend Foundations" }}</h3>
+            <p class="text-white-50 mb-3" style="font-size: 0.95rem;">
+                <i class="bi bi-info-circle-fill text-info me-1"></i>
+                {{ next_best_action.why_recommended|default:"This topic closes a critical skill gap and unlocks subsequent milestone projects." }}
+            </p>
+            <div class="d-flex flex-wrap align-items-center gap-3 text-white-50 small">
+                <span><i class="bi bi-clock me-1 text-warning"></i> Estimated: ~{{ next_best_action.estimated_hours|default:1.0|floatformat:1 }} hours</span>
+                <span><i class="bi bi-layers me-1 text-info"></i> {{ current_milestone_title }}</span>
+                <span><i class="bi bi-tag me-1 text-success"></i> Status: <span class="badge bg-primary">{{ next_best_action.status|default:"In Progress" }}</span></span>
+            </div>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+            <a href="{% url 'roadmap' %}" class="btn btn-lg btn-warning fw-bold px-4 shadow">
+                <i class="bi bi-play-circle-fill me-1"></i> Start Learning Now
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 2: METRICS STATS WIDGETS -->
+<div class="row g-3 mb-4">
+    <!-- Overall Progress -->
+    <div class="col-sm-6 col-xl">
+        <div class="stat-widget">
+            <div class="stat-icon primary"><i class="bi bi-pie-chart-fill"></i></div>
+            <div>
+                <small class="text-muted d-block">Overall Progress</small>
+                <h4 class="fw-bold mb-0">{{ overall_progress }}%</h4>
+            </div>
+        </div>
+    </div>
+    <!-- Skills Acquired -->
+    <div class="col-sm-6 col-xl">
+        <div class="stat-widget">
+            <div class="stat-icon success"><i class="bi bi-check2-all"></i></div>
+            <div>
+                <small class="text-muted d-block">Skills Acquired</small>
+                <h4 class="fw-bold mb-0">{{ skills_acquired }} / {{ total_skills }}</h4>
+            </div>
+        </div>
+    </div>
+    <!-- Current Milestone -->
+    <div class="col-sm-6 col-xl">
+        <div class="stat-widget">
+            <div class="stat-icon warning"><i class="bi bi-flag-fill"></i></div>
+            <div>
+                <small class="text-muted d-block">Active Milestone</small>
+                <h4 class="fw-bold mb-0">{{ current_milestone_number }} / {{ total_milestones }}</h4>
+            </div>
+        </div>
+    </div>
+    <!-- Weekly Hours -->
+    <div class="col-sm-6 col-xl">
+        <div class="stat-widget">
+            <div class="stat-icon info"><i class="bi bi-clock-history"></i></div>
+            <div>
+                <small class="text-muted d-block">Weekly Learning</small>
+                <h4 class="fw-bold mb-0">{{ weekly_hours_logged }} / {{ weekly_hours_target }} hrs</h4>
+            </div>
+        </div>
+    </div>
+    <!-- Streak -->
+    <div class="col-sm-6 col-xl">
+        <div class="stat-widget">
+            <div class="stat-icon" style="background: #fee2e2; color: #dc2626;"><i class="bi bi-fire"></i></div>
+            <div>
+                <small class="text-muted d-block">Learning Streak</small>
+                <h4 class="fw-bold mb-0">{{ streak_days }} Days 🔥</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 3: VISUAL CHARTS (RADAR + MILESTONE PROGRESS) -->
+<div class="row g-4 mb-4">
+    <!-- Chart 1: Skill Radar Matrix -->
+    <div class="col-lg-6">
+        <div class="saas-card h-100">
+            <div class="saas-card-header">
+                <h5 class="fw-bold mb-0"><i class="bi bi-radar text-primary me-2"></i>Skill Competency Matrix</h5>
+                <a href="{% url 'skill_gaps' %}" class="small text-decoration-none fw-semibold">View Skill Gaps <i class="bi bi-arrow-right"></i></a>
+            </div>
+            <div class="saas-card-body">
+                <div style="height: 300px; position: relative;">
+                    <canvas id="skillRadarChart" 
+                            data-labels='{{ radar_labels|safe|escapejs }}' 
+                            data-user-scores='{{ radar_user_scores|safe|escapejs }}' 
+                            data-target-scores='{{ radar_target_scores|safe|escapejs }}'></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart 2: Milestone Breakdown -->
+    <div class="col-lg-6">
+        <div class="saas-card h-100">
+            <div class="saas-card-header">
+                <h5 class="fw-bold mb-0"><i class="bi bi-bar-chart-line-fill text-primary me-2"></i>Milestone Completion</h5>
+                <span class="badge bg-primary">{{ total_items }} Total Learning Items</span>
+            </div>
+            <div class="saas-card-body">
+                <div style="height: 300px; position: relative;">
+                    <canvas id="milestoneProgressChart" 
+                            data-labels='{{ milestone_labels|safe|escapejs }}' 
+                            data-pcts='{{ milestone_pcts|safe|escapejs }}'></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 4: ACTIVE ROADMAP MILESTONES OVERVIEW -->
+<div class="saas-card mb-4">
+    <div class="saas-card-header">
+        <h5 class="fw-bold mb-0"><i class="bi bi-signpost-2-fill text-primary me-2"></i>Your Learning Milestones</h5>
+        <a href="{% url 'roadmap' %}" class="btn btn-sm btn-outline-primary">Open Interactive Roadmap</a>
+    </div>
+    <div class="saas-card-body">
+        <div class="row g-3">
+            {% for m in milestones %}
+            <div class="col-md-6 col-xl-3">
+                <div class="p-3 border rounded-3 bg-light h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge {% if m.is_completed %}bg-success{% elif m.order == current_milestone_number %}bg-primary{% else %}bg-secondary{% endif %}">
+                                Milestone {{ m.order }}
+                            </span>
+                            <span class="small fw-bold">{{ m.progress_percentage }}%</span>
+                        </div>
+                        <h6 class="fw-bold mb-1">{{ m.title }}</h6>
+                        <p class="text-muted small mb-3">{{ m.description|truncatechars:85 }}</p>
+                    </div>
+                    <div>
+                        <div class="progress progress-custom mb-2">
+                            <div class="progress-bar progress-custom-bar" style="width: {{ m.progress_percentage }}%;"></div>
+                        </div>
+                        <div class="d-flex justify-content-between small text-muted">
+                            <span>{{ m.completed_count }} / {{ m.items_count }} completed</span>
+                            <span>~{{ m.estimated_hours }} hrs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/dashboard.js"></script>
+{% endblock %}

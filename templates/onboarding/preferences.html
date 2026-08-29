@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Step 5: Study Preferences — Career PathFinder{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-4">
+    <div class="col-lg-8">
+        <!-- Progress Bar Indicator -->
+        <div class="mb-4">
+            <div class="d-flex justify-content-between text-muted small fw-semibold mb-2">
+                <span>Step 5 of 5: Study Preferences & Timeline</span>
+                <span>100%</span>
+            </div>
+            <div class="progress progress-custom">
+                <div class="progress-bar progress-custom-bar" style="width: 100%;"></div>
+            </div>
+        </div>
+
+        <div class="saas-card p-4 p-md-5">
+            <div class="text-center mb-4">
+                <div class="bg-primary text-white rounded-circle d-inline-flex p-3 mb-3">
+                    <i class="bi bi-sliders fs-2"></i>
+                </div>
+                <h2 class="fw-bold">How do you prefer to learn?</h2>
+                <p class="text-muted">We will calibrate your weekly pace, resource formats, and roadmap milestones.</p>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label class="form-label fw-bold">How many hours can you study each week?</label>
+                    <select name="weekly_hours" class="form-select form-select-lg">
+                        <option value="1-5" {% if profile.weekly_hours == '1-5' %}selected{% endif %}>1–5 hours (Casual / Slow Pace)</option>
+                        <option value="5-10" {% if profile.weekly_hours == '5-10' or not profile.weekly_hours %}selected{% endif %}>5–10 hours (Standard Balanced Pace)</option>
+                        <option value="10-15" {% if profile.weekly_hours == '10-15' %}selected{% endif %}>10–15 hours (Accelerated Track)</option>
+                        <option value="15-20" {% if profile.weekly_hours == '15-20' %}selected{% endif %}>15–20 hours (Intensive Track)</option>
+                        <option value="20+" {% if profile.weekly_hours == '20+' %}selected{% endif %}>20+ hours (Full-time Bootcamp Pace)</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Preferred Learning Style</label>
+                    <select name="learning_style" class="form-select form-select-lg">
+                        <option value="Mixed" {% if profile.learning_style == 'Mixed' or not profile.learning_style %}selected{% endif %}>Mixed (Balanced Video, Reading, Katas, and Projects)</option>
+                        <option value="Videos" {% if profile.learning_style == 'Videos' %}selected{% endif %}>Videos (Visual Tutorials & Walkthroughs)</option>
+                        <option value="Reading" {% if profile.learning_style == 'Reading' %}selected{% endif %}>Reading (Official Docs, Architecture Books, In-depth Guides)</option>
+                        <option value="Practice" {% if profile.learning_style == 'Practice' %}selected{% endif %}>Practice (Hands-on LeetCode, Katas & Coding Challenges)</option>
+                        <option value="Projects" {% if profile.learning_style == 'Projects' %}selected{% endif %}>Projects (Build Portfolio Applications directly)</option>
+                    </select>
+                </div>
+
+                <div class="mb-5">
+                    <label class="form-label fw-bold">Target Timeline</label>
+                    <select name="target_timeline" class="form-select form-select-lg">
+                        <option value="1 month" {% if profile.target_timeline == '1 month' %}selected{% endif %}>1 Month (Sprint / Fast-track)</option>
+                        <option value="3 months" {% if profile.target_timeline == '3 months' or not profile.target_timeline %}selected{% endif %}>3 Months (Recommended Standard)</option>
+                        <option value="6 months" {% if profile.target_timeline == '6 months' %}selected{% endif %}>6 Months (Comprehensive Mastery)</option>
+                        <option value="1 year" {% if profile.target_timeline == '1 year' %}selected{% endif %}>1 Year (Deep Foundations)</option>
+                    </select>
+                </div>
+
+                <div class="d-flex justify-content-between pt-3 border-top">
+                    <a href="{% url 'onboarding_step' step=4 %}" class="btn btn-outline-secondary px-3"><i class="bi bi-arrow-left me-1"></i> Back</a>
+                    <button type="submit" class="btn btn-primary-custom btn-lg px-4 shadow">
+                        <i class="bi bi-magic me-2"></i> Generate My Personalized Path
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

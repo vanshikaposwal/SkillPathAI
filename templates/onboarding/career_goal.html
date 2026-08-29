@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Step 1: Your Career Goal — Career PathFinder{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-4">
+    <div class="col-lg-8">
+        <!-- Progress Bar Indicator -->
+        <div class="mb-4">
+            <div class="d-flex justify-content-between text-muted small fw-semibold mb-2">
+                <span>Step 1 of 5: Career Goal</span>
+                <span>20%</span>
+            </div>
+            <div class="progress progress-custom">
+                <div class="progress-bar progress-custom-bar" style="width: 20%;"></div>
+            </div>
+        </div>
+
+        <div class="saas-card p-4 p-md-5">
+            <div class="text-center mb-4">
+                <div class="bg-primary text-white rounded-circle d-inline-flex p-3 mb-3">
+                    <i class="bi bi-compass-fill fs-2"></i>
+                </div>
+                <h2 class="fw-bold">What do you want to become?</h2>
+                <p class="text-muted">Enter your career goal in natural language. Our AI will analyze and tailor your track.</p>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Your Target Role / Ambition</label>
+                    <input type="text" name="career_goal" id="career_goal" class="form-control form-control-lg" 
+                           placeholder="e.g. I want to become a Java backend developer building microservices" 
+                           value="{{ profile.career_goal }}" required>
+                </div>
+
+                <div class="mb-4">
+                    <small class="text-muted fw-semibold d-block mb-2">Popular suggestions (click to auto-fill):</small>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill" onclick="document.getElementById('career_goal').value='Java Backend Developer'">Java Backend Developer</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill" onclick="document.getElementById('career_goal').value='Frontend Developer (React)'">Frontend Developer (React)</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill" onclick="document.getElementById('career_goal').value='Full Stack Developer'">Full Stack Developer</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill" onclick="document.getElementById('career_goal').value='Data Scientist & Machine Learning'">Data Scientist</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill" onclick="document.getElementById('career_goal').value='AI/ML Engineer (LLMs & PyTorch)'">AI/ML Engineer</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill" onclick="document.getElementById('career_goal').value='Cloud & DevOps Engineer'">Cloud Engineer</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill" onclick="document.getElementById('career_goal').value='Cybersecurity Analyst'">Cybersecurity Analyst</button>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary-custom px-4 py-2">
+                        Next: Experience Level <i class="bi bi-arrow-right ms-1"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}Skill Gap Analysis — Career PathFinder{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1"><i class="bi bi-bar-chart-steps text-primary me-2"></i>Skill Gap Analysis</h2>
+        <p class="text-muted mb-0">Target Role: <strong class="text-primary">{{ target_career }}</strong> — Required Competencies vs. Your Profile</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a href="{% url 'roadmap' %}" class="btn btn-primary-custom">
+            <i class="bi bi-map me-1"></i> Go to Roadmap
+        </a>
+    </div>
+</div>
+
+<!-- SUMMARY METRICS -->
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="saas-card p-3 border-danger border-start border-4">
+            <small class="text-muted fw-bold d-block">HIGH PRIORITY GAPS</small>
+            <h3 class="fw-bold text-danger mb-0">{{ high_priority_count }} Skills</h3>
+            <small class="text-muted">Core blockers needed for target career milestones</small>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="saas-card p-3 border-warning border-start border-4">
+            <small class="text-muted fw-bold d-block">MEDIUM PRIORITY GAPS</small>
+            <h3 class="fw-bold text-warning mb-0">{{ medium_priority_count }} Skills</h3>
+            <small class="text-muted">Recommended for complete production mastery</small>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="saas-card p-3 border-success border-start border-4">
+            <small class="text-muted fw-bold d-block">ACQUIRED / ON TRACK</small>
+            <h3 class="fw-bold text-success mb-0">{{ acquired_count }} Skills</h3>
+            <small class="text-muted">Baseline competencies satisfied</small>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <!-- SECTION 1: CURRENT KNOWN SKILLS -->
+    <div class="col-lg-5">
+        <div class="saas-card h-100">
+            <div class="saas-card-header">
+                <h5 class="fw-bold mb-0"><i class="bi bi-person-check-fill text-success me-2"></i>Your Verified Skills</h5>
+                <a href="{% url 'profile' %}" class="btn btn-sm btn-outline-secondary">Edit Skills</a>
+            </div>
+            <div class="saas-card-body">
+                {% if current_skills %}
+                    <div class="d-flex flex-column gap-3">
+                        {% for s in current_skills %}
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="fw-bold">{{ s.name }}</span>
+                                <span class="badge bg-light text-dark border">{{ s.proficiency }} ({{ s.percent }}%)</span>
+                            </div>
+                            <div class="progress progress-custom">
+                                <div class="progress-bar bg-success" style="width: {{ s.percent }}%;"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted">No skills recorded yet. Complete onboarding or edit your profile.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: IDENTIFIED SKILL GAPS & WHY THEY MATTER -->
+    <div class="col-lg-7">
+        <div class="saas-card h-100">
+            <div class="saas-card-header">
+                <h5 class="fw-bold mb-0"><i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Identified Skill Gaps</h5>
+                <span class="badge bg-primary">{{ gaps|length }} Tracked Requirements</span>
+            </div>
+            <div class="saas-card-body p-0">
+                <div class="list-group list-group-flush">
+                    {% for g in gaps %}
+                    <div class="list-group-item p-3">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <h6 class="fw-bold mb-0">{{ g.skill_name }}</h6>
+                                <span class="badge bg-light text-secondary border">{{ g.category }}</span>
+                            </div>
+                            <div>
+                                {% if g.priority == 'HIGH' %}
+                                    <span class="badge-priority-high"><i class="bi bi-fire me-1"></i>HIGH PRIORITY</span>
+                                {% elif g.priority == 'MEDIUM' %}
+                                    <span class="badge-priority-medium">MEDIUM PRIORITY</span>
+                                {% elif g.priority == 'ACQUIRED' %}
+                                    <span class="badge-acquired"><i class="bi bi-check-circle me-1"></i>ACQUIRED</span>
+                                {% else %}
+                                    <span class="badge-priority-low">LOW PRIORITY</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="row g-2 small text-muted mb-2">
+                            <div class="col-6 col-sm-3">Current Level: <strong>{{ g.current_level }}</strong></div>
+                            <div class="col-6 col-sm-3">Required Level: <strong>{{ g.required_level }}</strong></div>
+                            <div class="col-6 col-sm-3">Importance: <strong>{{ g.importance }}</strong></div>
+                            <div class="col-6 col-sm-3">Order Rank: <strong>#{{ g.prerequisite_order }}</strong></div>
+                        </div>
+
+                        <div class="p-2 rounded bg-light border text-secondary small">
+                            <strong><i class="bi bi-info-circle me-1 text-primary"></i>Why it matters:</strong> {{ g.why_it_matters }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

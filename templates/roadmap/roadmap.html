@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% block title %}Personalized Learning Roadmap — Career PathFinder{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1"><i class="bi bi-signpost-split-fill text-primary me-2"></i>{{ roadmap.title }}</h2>
+        <p class="text-muted mb-0">{{ roadmap.description }}</p>
+    </div>
+    <div class="d-flex align-items-center gap-3 mt-3 mt-md-0">
+        <form method="post" action="{% url 'regenerate_path' %}" onsubmit="return confirm('Regenerate roadmap based on latest profile data?');">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-clockwise me-1"></i> Regenerate Path
+            </button>
+        </form>
+        <div class="bg-white p-2 px-3 border rounded-3 text-center shadow-sm">
+            <small class="text-muted d-block" style="font-size: 0.75rem;">ROADMAP PROGRESS</small>
+            <strong class="text-primary fs-5" id="overall-progress-text">{{ roadmap.progress_percentage }}%</strong>
+        </div>
+    </div>
+</div>
+
+<!-- Progress Meter -->
+<div class="progress progress-custom mb-5 shadow-sm" style="height: 12px;">
+    <div id="overall-progress-bar" class="progress-bar progress-custom-bar" style="width: {{ roadmap.progress_percentage }}%;"></div>
+</div>
+
+<!-- Timeline Milestones Accordion -->
+<div class="timeline-container">
+    {% for m in milestones %}
+    <div class="timeline-milestone {% if m.is_completed %}completed{% elif m.completed_count > 0 %}active{% endif %}">
+        <div class="timeline-badge">{{ m.order }}</div>
+        
+        <div class="saas-card mb-4">
+            <div class="saas-card-header d-flex flex-wrap justify-content-between align-items-center cursor-pointer" data-bs-toggle="collapse" data-bs-target="#collapseM{{ m.id }}">
+                <div class="d-flex align-items-center gap-3">
+                    <span class="badge {% if m.is_completed %}bg-success{% elif m.completed_count > 0 %}bg-primary{% else %}bg-secondary{% endif %}">
+                        Milestone {{ m.order }}
+                    </span>
+                    <h5 class="fw-bold mb-0">{{ m.title }}</h5>
+                </div>
+                <div class="d-flex align-items-center gap-3 mt-2 mt-sm-0">
+                    <small class="text-muted"><i class="bi bi-clock me-1"></i>~{{ m.estimated_hours }} hours</small>
+                    <span class="badge bg-light text-dark border">{{ m.completed_count }}/{{ m.items_count }} Done ({{ m.progress_percentage }}%)</span>
+                    <i class="bi bi-chevron-down text-muted"></i>
+                </div>
+            </div>
+
+            <div id="collapseM{{ m.id }}" class="collapse show">
+                <div class="p-3 bg-light border-bottom">
+                    <p class="mb-0 text-secondary small">{{ m.description }}</p>
+                </div>
+
+                <div class="list-group list-group-flush">
+                    {% for item in m.items.all %}
+                    <div id="item-row-{{ item.id }}" class="list-group-item p-3 d-flex flex-wrap justify-content-between align-items-center gap-3 {% if item.status == 'Completed' %}bg-light{% endif %}">
+                        <div class="d-flex align-items-start gap-3" style="max-width: 650px;">
+                            <div class="mt-1">
+                                {% if item.item_type == 'Topic' %}
+                                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle p-2"><i class="bi bi-book"></i></span>
+                                {% elif item.item_type == 'Resource' %}
+                                    <span class="badge bg-info-subtle text-info border border-info-subtle p-2"><i class="bi bi-link-45deg"></i></span>
+                                {% elif item.item_type == 'Project' %}
+                                    <span class="badge bg-warning-subtle text-warning border border-warning-subtle p-2"><i class="bi bi-code-slash"></i></span>
+                                {% elif item.item_type == 'Assessment' %}
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle p-2"><i class="bi bi-patch-check"></i></span>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <div class="d-flex align-items-center gap-2 mb-1">
+                                    <h6 class="fw-bold mb-0 {% if item.status == 'Completed' %}text-decoration-line-through text-muted{% endif %}">{{ item.title }}</h6>
+                                    <span class="badge {% if item.status == 'Completed' %}bg-success{% elif item.status == 'In Progress' %}bg-primary{% else %}bg-secondary{% endif %} item-status-badge">
+                                        {{ item.status }}
+                                    </span>
+                                </div>
+                                <p class="text-muted small mb-1">{{ item.description }}</p>
+                                <div class="d-flex flex-wrap align-items-center gap-3 text-muted" style="font-size: 0.8rem;">
+                                    <span><i class="bi bi-clock me-1"></i>{{ item.estimated_hours }}h</span>
+                                    <span><i class="bi bi-layers me-1"></i>{{ item.item_type }}</span>
+                                    {% if item.resource %}
+                                        <a href="{{ item.resource.url }}" target="_blank" class="text-decoration-none fw-semibold text-primary">
+                                            <i class="bi bi-box-arrow-up-right me-1"></i>{{ item.resource.platform }}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex align-items-center gap-2">
+                            <!-- Explainable Recommendation Button -->
+                            <button type="button" class="btn btn-sm btn-outline-info" onclick="showWhyModal('{{ item.id }}')" title="Explain Why Recommended">
+                                <i class="bi bi-question-circle me-1"></i> Why?
+                            </button>
+
+                            <!-- Ask AI Button -->
+                            <a href="{% url 'ai_assistant' %}?q=Explain%20how%20to%20master%20{{ item.title|urlencode }}" class="btn btn-sm btn-outline-primary" title="Ask AI about this topic">
+                                <i class="bi bi-robot"></i> Ask AI
+                            </a>
+
+                            <!-- Adaptive Feedback Button -->
+                            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="openFeedbackModal('{{ item.id }}', '{{ item.title|escapejs }}')" title="Provide Adaptive Feedback">
+                                <i class="bi bi-sliders2"></i> Feedback
+                            </button>
+
+                            <!-- Mark Complete / Completed State -->
+                            {% if item.status == 'Completed' %}
+                                <span class="text-success fw-bold small px-2"><i class="bi bi-check-circle-fill me-1"></i>Completed</span>
+                            {% else %}
+                                <button type="button" class="btn btn-sm btn-success" onclick="completeRoadmapItem('{{ item.id }}', this)">
+                                    <i class="bi bi-check2"></i> Mark Complete
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- MODAL 1: EXPLAINABLE RECOMMENDATION ("Why this recommendation?") -->
+<div class="modal fade" id="whyModal" tabindex="-1" aria-labelledby="whyModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content saas-card">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title fw-bold" id="whyModalTitle">Why this recommendation?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="whyModalBody">
+                <!-- Loaded dynamically via AJAX -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL 2: ADAPTIVE LEARNING FEEDBACK -->
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content saas-card">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title fw-bold">Adaptive Feedback: <span id="feedbackItemTitle" class="text-primary"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted small mb-3">How does this topic feel? Choosing an option will dynamically adapt your roadmap.</p>
+                
+                <div class="d-grid gap-2 mb-3">
+                    <button type="button" class="btn btn-outline-primary text-start p-2" onclick="submitFeedback('TOO_EASY')">
+                        <strong>⚡ Too Easy</strong> — Fast-track & skip introductory material
+                    </button>
+                    <button type="button" class="btn btn-outline-warning text-start p-2" onclick="submitFeedback('TOO_DIFFICULT')">
+                        <strong>🧩 Too Difficult</strong> — Automatically insert prerequisite foundations
+                    </button>
+                    <button type="button" class="btn btn-outline-success text-start p-2" onclick="submitFeedback('ALREADY_KNOW')">
+                        <strong>✅ Already Know</strong> — Mark as complete and advance
+                    </button>
+                    <button type="button" class="btn btn-outline-info text-start p-2" onclick="submitFeedback('MORE_PRACTICE')">
+                        <strong>🛠️ Need More Practice</strong> — Add hands-on coding exercises & katas
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary text-start p-2" onclick="submitFeedback('NOT_INTERESTED')">
+                        <strong>🔄 Not Interested</strong> — Deprioritize and suggest elective alternatives
+                    </button>
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label small fw-bold">Optional Notes for AI Tutor:</label>
+                    <input type="text" id="feedbackUserNote" class="form-control form-control-sm" placeholder="e.g. I already built something similar in Java 11...">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/roadmap.js"></script>
+{% endblock %}

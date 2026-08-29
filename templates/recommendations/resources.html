@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Curated Learning Resources — Career PathFinder{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1"><i class="bi bi-collection-play-fill text-primary me-2"></i>Curated Learning Resources</h2>
+        <p class="text-muted mb-0">Verified official documentation, courses, articles, and interactive coding platforms.</p>
+    </div>
+</div>
+
+<!-- Filters -->
+<div class="saas-card p-3 mb-4">
+    <form method="get" class="row g-2 align-items-center">
+        <div class="col-md-4">
+            <input type="text" name="q" class="form-control" placeholder="Search by topic (e.g. Spring, Python, SQL)..." value="{{ query }}">
+        </div>
+        <div class="col-md-3">
+            <select name="type" class="form-select">
+                <option value="">All Formats</option>
+                <option value="Documentation" {% if selected_type == 'Documentation' %}selected{% endif %}>Official Documentation</option>
+                <option value="Course" {% if selected_type == 'Course' %}selected{% endif %}>Courses</option>
+                <option value="Article" {% if selected_type == 'Article' %}selected{% endif %}>Articles / Guides</option>
+                <option value="Practice" {% if selected_type == 'Practice' %}selected{% endif %}>Interactive Practice</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select name="cost" class="form-select">
+                <option value="">Free & Paid</option>
+                <option value="Free" {% if selected_cost == 'Free' %}selected{% endif %}>Free Only</option>
+                <option value="Paid" {% if selected_cost == 'Paid' %}selected{% endif %}>Paid Only</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary-custom w-100">Filter</button>
+        </div>
+    </form>
+</div>
+
+<!-- Resources Grid -->
+<div class="row g-3">
+    {% for r in resources %}
+    <div class="col-md-6 col-lg-4">
+        <div class="saas-card h-100 p-4 d-flex flex-column justify-content-between">
+            <div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle">{{ r.platform }}</span>
+                    <span class="badge {% if r.free_or_paid == 'Free' %}bg-success-subtle text-success border border-success-subtle{% else %}bg-secondary{% endif %}">
+                        {{ r.free_or_paid }}
+                    </span>
+                </div>
+                <h5 class="fw-bold mb-2">{{ r.title }}</h5>
+                <p class="text-muted small mb-3">{{ r.description|truncatechars:140 }}</p>
+            </div>
+            <div>
+                <div class="d-flex justify-content-between align-items-center small text-muted pt-3 border-top mb-3">
+                    <span><i class="bi bi-clock me-1"></i>~{{ r.estimated_hours }} hrs</span>
+                    <span><i class="bi bi-star-fill text-warning me-1"></i>{{ r.rating }}/5.0</span>
+                    <span class="badge bg-light text-dark border">{{ r.difficulty }}</span>
+                </div>
+                <a href="{{ r.url }}" target="_blank" class="btn btn-outline-primary btn-sm w-100">
+                    <i class="bi bi-box-arrow-up-right me-1"></i> Open on {{ r.platform }}
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5 text-muted">
+        <i class="bi bi-search fs-1 d-block mb-2"></i>
+        No matching resources found. Try clearing filters.
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

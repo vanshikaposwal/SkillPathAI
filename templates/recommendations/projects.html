@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Portfolio Projects — Career PathFinder{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1"><i class="bi bi-code-square text-primary me-2"></i>Portfolio Project Recommendations</h2>
+        <p class="text-muted mb-0">Hands-on architectures to solidify your skills and build an impressive GitHub showcase.</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    {% for p in projects %}
+    <div class="col-lg-6">
+        <div class="saas-card h-100 p-4 d-flex flex-column justify-content-between">
+            <div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="badge {% if p.difficulty == 'Beginner' %}bg-success{% elif p.difficulty == 'Intermediate' %}bg-primary{% else %}bg-danger{% endif %}">
+                        {{ p.difficulty }}
+                    </span>
+                    <small class="text-muted"><i class="bi bi-clock me-1"></i>~{{ p.estimated_hours }} hours</small>
+                </div>
+                <h4 class="fw-bold mb-2">{{ p.title }}</h4>
+                <p class="text-secondary small mb-3">{{ p.description }}</p>
+                
+                <div class="mb-3">
+                    <small class="text-muted d-block mb-1 fw-bold">Skills Developed:</small>
+                    <div class="d-flex flex-wrap gap-1">
+                        {% for s in p.skills.all %}
+                        <span class="badge bg-light text-dark border">{{ s.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="p-3 bg-light rounded-3 border mb-3 small">
+                    <strong class="d-block mb-1 text-primary"><i class="bi bi-list-check me-1"></i>Implementation Steps:</strong>
+                    <pre class="mb-0 text-secondary" style="font-family: inherit; font-size: 0.8rem; white-space: pre-wrap;">{{ p.starter_guide }}</pre>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                <a href="{% url 'ai_assistant' %}?q=Give%20me%20a%20step-by-step%20guide%20to%20build%20{{ p.title|urlencode }}" class="btn btn-sm btn-primary-custom">
+                    <i class="bi bi-robot me-1"></i> Ask AI for Starter Code
+                </a>
+                <a href="{% url 'roadmap' %}" class="btn btn-sm btn-outline-secondary">
+                    View in Roadmap
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

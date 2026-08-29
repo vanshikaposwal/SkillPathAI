@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Step 3: Select Current Skills — Career PathFinder{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-4">
+    <div class="col-lg-10">
+        <!-- Progress Bar Indicator -->
+        <div class="mb-4">
+            <div class="d-flex justify-content-between text-muted small fw-semibold mb-2">
+                <span>Step 3 of 5: Current Skills & Proficiency</span>
+                <span>60%</span>
+            </div>
+            <div class="progress progress-custom">
+                <div class="progress-bar progress-custom-bar" style="width: 60%;"></div>
+            </div>
+        </div>
+
+        <div class="saas-card p-4 p-md-5">
+            <div class="text-center mb-4">
+                <div class="bg-warning text-dark rounded-circle d-inline-flex p-3 mb-3">
+                    <i class="bi bi-tools fs-2"></i>
+                </div>
+                <h2 class="fw-bold">What skills do you already know?</h2>
+                <p class="text-muted">Select your existing skills and specify your proficiency level (Beginner, Intermediate, Advanced).</p>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="row g-3 mb-4">
+                    {% for s in skills %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="p-3 border rounded-3 bg-white h-100 skill-selection-card">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input skill-checkbox" type="checkbox" name="skills[]" value="{{ s.id }}" id="skill_{{ s.id }}"
+                                       onchange="toggleProficiency('{{ s.id }}')">
+                                <label class="form-check-label fw-bold" for="skill_{{ s.id }}">
+                                    {{ s.name }}
+                                </label>
+                            </div>
+                            <small class="badge bg-light text-secondary border mb-2">{{ s.category }}</small>
+                            <div class="mt-2 proficiency-select" id="prof_container_{{ s.id }}" style="display: none;">
+                                <label class="small text-muted mb-1 d-block">Proficiency:</label>
+                                <select name="prof_{{ s.id }}" class="form-select form-select-sm">
+                                    <option value="Beginner">Beginner (Basics)</option>
+                                    <option value="Intermediate" selected>Intermediate (Can Build)</option>
+                                    <option value="Advanced">Advanced (Production)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="d-flex justify-content-between pt-3 border-top">
+                    <a href="{% url 'onboarding_step' step=2 %}" class="btn btn-outline-secondary px-3"><i class="bi bi-arrow-left me-1"></i> Back</a>
+                    <button type="submit" class="btn btn-primary-custom px-4">Next: Learning History <i class="bi bi-arrow-right ms-1"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function toggleProficiency(skillId) {
+    const cb = document.getElementById(`skill_${skillId}`);
+    const profContainer = document.getElementById(`prof_container_${skillId}`);
+    if (cb.checked) {
+        profContainer.style.display = 'block';
+    } else {
+        profContainer.style.display = 'none';
+    }
+}
+</script>
+{% endblock %}

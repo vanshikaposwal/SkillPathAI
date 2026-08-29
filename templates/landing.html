@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+
+{% block title %}Career PathFinder — From where you are to where you want to be{% endblock %}
+
+{% block full_content %}
+<!-- Hero Section -->
+<section class="hero-gradient text-center py-5">
+    <div class="container py-4">
+        <div class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 rounded-pill mb-3 fw-semibold">
+            <i class="bi bi-stars me-1"></i> AI-Powered Career Planning Platform
+        </div>
+        <h1 class="display-4 fw-extrabold text-white mb-3 tracking-tight" style="letter-spacing: -1px;">
+            Find your personalized path to your <span class="brand-gradient">dream career.</span>
+        </h1>
+        <p class="lead text-white-50 mx-auto mb-4" style="max-width: 760px; font-size: 1.2rem;">
+            Career PathFinder analyzes your skills, goals, and learning history to generate an actionable, step-by-step roadmap of what to learn, what to build, and what to do next.
+        </p>
+        <div class="d-flex flex-wrap justify-content-center gap-3 mb-5">
+            <a href="{% url 'signup' %}" class="btn btn-lg btn-primary-custom px-4 py-3 shadow-lg">
+                <i class="bi bi-compass me-2"></i> Build My Career Path
+            </a>
+            <a href="{% url 'demo_login' %}" class="btn btn-lg btn-warning fw-bold px-4 py-3 shadow-lg">
+                <i class="bi bi-lightning-charge-fill me-1"></i> Try Demo (Alex Sharma)
+            </a>
+        </div>
+
+        <!-- Hackathon Highlight Badge Bar -->
+        <div class="row g-3 justify-content-center pt-4 border-top border-secondary border-opacity-25" style="max-width: 900px; margin: 0 auto;">
+            <div class="col-md-3 col-6">
+                <div class="text-white fw-bold fs-4">100%</div>
+                <div class="text-white-50 small">Personalized Roadmaps</div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="text-white fw-bold fs-4">7+</div>
+                <div class="text-white-50 small">Career Skill Graphs</div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="text-white fw-bold fs-4">Offline AI</div>
+                <div class="text-white-50 small">Robust Deterministic Fallback</div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="text-white fw-bold fs-4">Adaptive</div>
+                <div class="text-white-50 small">Continuous Feedback Loop</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="py-5 bg-white border-bottom">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <h6 class="text-primary text-uppercase fw-bold" style="letter-spacing: 1px;">Structured Pipeline</h6>
+            <h2 class="fw-bold">How Career PathFinder Works</h2>
+            <p class="text-muted">A clear, scientific 5-step journey from current skill level to job-ready mastery.</p>
+        </div>
+
+        <div class="row g-4 text-center">
+            <div class="col-md">
+                <div class="p-4 rounded-4 bg-light border h-100">
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 fw-bold" style="width: 48px; height: 48px;">1</div>
+                    <h5 class="fw-bold">Tell Us Your Goal</h5>
+                    <p class="text-muted small">Input any natural language career goal, study hours, and timeline.</p>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="p-4 rounded-4 bg-light border h-100">
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 fw-bold" style="width: 48px; height: 48px;">2</div>
+                    <h5 class="fw-bold">Analyze Skills</h5>
+                    <p class="text-muted small">Map your current proficiencies against target industry standards.</p>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="p-4 rounded-4 bg-primary text-white rounded-4 shadow h-100">
+                    <div class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 fw-bold" style="width: 48px; height: 48px;">3</div>
+                    <h5 class="fw-bold text-white">Find Skill Gaps</h5>
+                    <p class="text-white-50 small">Calculate high-priority missing prerequisites and foundational topics.</p>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="p-4 rounded-4 bg-light border h-100">
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 fw-bold" style="width: 48px; height: 48px;">4</div>
+                    <h5 class="fw-bold">Generate Roadmap</h5>
+                    <p class="text-muted small">Synthesize verified resources, milestone projects, and assessments.</p>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="p-4 rounded-4 bg-light border h-100">
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 fw-bold" style="width: 48px; height: 48px;">5</div>
+                    <h5 class="fw-bold">Adapt & Track</h5>
+                    <p class="text-muted small">Your roadmap automatically adapts as you submit feedback and tests.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Supported Career Paths -->
+<section class="py-5 bg-light border-bottom">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <h6 class="text-primary text-uppercase fw-bold">Supported Tracks</h6>
+            <h2 class="fw-bold">Top Tech Career Specializations</h2>
+            <p class="text-muted">Structured DAG skill graphs built with industry requirements in mind.</p>
+        </div>
+
+        <div class="row g-4">
+            {% for c in careers|default:"" %}
+            {% endfor %}
+            <div class="col-lg-4 col-md-6">
+                <div class="saas-card h-100 p-4">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="bg-primary-subtle text-primary p-3 rounded-3 fs-3"><i class="bi bi-server"></i></div>
+                        <div>
+                            <h5 class="fw-bold mb-0">Backend Developer</h5>
+                            <small class="text-muted">Java, Spring Boot, SQL, REST, Docker</small>
+                        </div>
+                    </div>
+                    <p class="text-secondary small">Architect scalable microservices, relational databases, caching layers, and cloud APIs.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="saas-card h-100 p-4">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="bg-info-subtle text-info p-3 rounded-3 fs-3"><i class="bi bi-window-sidebar"></i></div>
+                        <div>
+                            <h5 class="fw-bold mb-0">Frontend Developer</h5>
+                            <small class="text-muted">HTML5, CSS3, ES6+, React, State Mgmt</small>
+                        </div>
+                    </div>
+                    <p class="text-secondary small">Build high-performance, accessible, responsive single page web applications and UI systems.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="saas-card h-100 p-4">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="bg-success-subtle text-success p-3 rounded-3 fs-3"><i class="bi bi-layers-half"></i></div>
+                        <div>
+                            <h5 class="fw-bold mb-0">Full Stack Developer</h5>
+                            <small class="text-muted">Python, Django, React, Databases, CI/CD</small>
+                        </div>
+                    </div>
+                    <p class="text-secondary small">Master end-to-end web engineering from pixel-perfect UI to scalable backend database services.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="saas-card h-100 p-4">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="bg-warning-subtle text-warning p-3 rounded-3 fs-3"><i class="bi bi-graph-up-arrow"></i></div>
+                        <div>
+                            <h5 class="fw-bold mb-0">Data Scientist</h5>
+                            <small class="text-muted">Python, NumPy, Pandas, Scikit-Learn, SQL</small>
+                        </div>
+                    </div>
+                    <p class="text-secondary small">Perform statistical modeling, exploratory data analysis, and build predictive machine learning pipelines.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="saas-card h-100 p-4">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="bg-danger-subtle text-danger p-3 rounded-3 fs-3"><i class="bi bi-cpu"></i></div>
+                        <div>
+                            <h5 class="fw-bold mb-0">AI/ML Engineer</h5>
+                            <small class="text-muted">PyTorch, Deep Learning, Transformers, LLMs</small>
+                        </div>
+                    </div>
+                    <p class="text-secondary small">Train neural networks, fine-tune Large Language Models, build RAG pipelines, and serve models at scale.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="saas-card h-100 p-4">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="bg-dark-subtle text-dark p-3 rounded-3 fs-3"><i class="bi bi-cloud-check"></i></div>
+                        <div>
+                            <h5 class="fw-bold mb-0">Cloud & DevOps</h5>
+                            <small class="text-muted">Linux, AWS, Docker, Kubernetes, Terraform</small>
+                        </div>
+                    </div>
+                    <p class="text-secondary small">Provision infrastructure as code, orchestrate container clusters, and automate zero-downtime releases.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Banner -->
+<section class="py-5 bg-white text-center">
+    <div class="container py-4">
+        <div class="p-5 rounded-4 bg-primary text-white shadow-lg position-relative overflow-hidden">
+            <h2 class="display-6 fw-bold mb-3">Ready to accelerate your career?</h2>
+            <p class="lead text-white-50 mb-4 mx-auto" style="max-width: 600px;">
+                Experience personalized roadmaps, skill gap insights, and an AI mentor grounded in your learning trajectory.
+            </p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="{% url 'demo_login' %}" class="btn btn-lg btn-warning fw-bold px-4"><i class="bi bi-lightning-charge-fill me-1"></i> Try Instant Demo</a>
+                <a href="{% url 'signup' %}" class="btn btn-lg btn-outline-light px-4">Create Free Account</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white-50 py-4 border-top border-secondary border-opacity-25">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-2">
+            <span class="brand-gradient fw-bold fs-5">Career PathFinder</span>
+            <small>— From where you are to where you want to be.</small>
+        </div>
+        <small>© 2026 Career PathFinder. Built with Python & Django for Hackathon Demo.</small>
+    </div>
+</footer>
+{% endblock %}

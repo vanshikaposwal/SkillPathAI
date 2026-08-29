@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}AI Learning Assistant — Career PathFinder{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+    <div>
+        <h2 class="fw-bold mb-1"><i class="bi bi-robot text-primary me-2"></i>AI Learning Mentor</h2>
+        <p class="text-muted mb-0">Grounds every answer in your active <strong>{{ profile.career_goal }}</strong> roadmap and verified skill gaps.</p>
+    </div>
+    <div>
+        <a href="{% url 'clear_ai_history' %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Clear chat history?');">
+            <i class="bi bi-trash me-1"></i> Clear History
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Chat Window -->
+    <div class="col-lg-8">
+        <div class="saas-card chat-container shadow-sm">
+            <!-- Messages Container -->
+            <div class="chat-history" id="chatHistory">
+                {% for msg in chat_messages %}
+                <div class="chat-msg {{ msg.role }}">
+                    {% if msg.role == 'assistant' %}
+                        <div class="d-flex align-items-center gap-1 small text-primary fw-bold mb-1">
+                            <i class="bi bi-cpu-fill"></i> AI Mentor
+                        </div>
+                    {% endif %}
+                    <div>{{ msg.message|linebreaksbr }}</div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Quick Suggestion Chips -->
+            <div class="p-2 px-3 border-top bg-light d-flex gap-2 overflow-x-auto">
+                <button class="prompt-chip" type="button">What should I learn today?</button>
+                <button class="prompt-chip" type="button">Why do I need Spring Boot?</button>
+                <button class="prompt-chip" type="button">Can I skip SQL?</button>
+                <button class="prompt-chip" type="button">I only have 5 hours this week. What should I do?</button>
+                <button class="prompt-chip" type="button">Explain dependency injection.</button>
+                <button class="prompt-chip" type="button">Give me a project.</button>
+            </div>
+
+            <!-- Input Bar -->
+            <div class="p-3 border-top bg-white">
+                <form id="chatForm" class="d-flex gap-2">
+                    <input type="text" id="chatInput" class="form-control" placeholder="Ask your AI mentor anything about your roadmap..." autocomplete="off" required>
+                    <button type="submit" id="sendBtn" class="btn btn-primary-custom px-4 d-flex align-items-center gap-1">
+                        <i class="bi bi-send-fill"></i> Send
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Profile Context Inspector Card -->
+    <div class="col-lg-4">
+        <div class="saas-card p-4">
+            <h5 class="fw-bold mb-3"><i class="bi bi-fingerprint text-primary me-2"></i>Active AI Context</h5>
+            <p class="text-muted small mb-3">Your AI mentor uses these exact profile parameters to personalize guidance:</p>
+            
+            <div class="d-flex flex-column gap-2 small">
+                <div class="p-2 bg-light rounded border">
+                    <span class="text-muted d-block">Target Goal:</span>
+                    <strong>{{ profile.career_goal }}</strong>
+                </div>
+                <div class="p-2 bg-light rounded border">
+                    <span class="text-muted d-block">Experience & Pace:</span>
+                    <strong>{{ profile.experience_level }} ({{ profile.weekly_hours }} hrs/week)</strong>
+                </div>
+                <div class="p-2 bg-light rounded border">
+                    <span class="text-muted d-block">Target Timeline:</span>
+                    <strong>{{ profile.target_timeline }}</strong>
+                </div>
+                <div class="p-2 bg-light rounded border">
+                    <span class="text-muted d-block">Learning Style:</span>
+                    <strong>{{ profile.learning_style }}</strong>
+                </div>
+                <div class="p-2 bg-light rounded border">
+                    <span class="text-muted d-block">AI Engine Mode:</span>
+                    <span class="badge bg-success">Hybrid OpenAI + Intelligent Deterministic</span>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-top text-center">
+                <a href="{% url 'profile' %}" class="btn btn-sm btn-outline-primary w-100">
+                    <i class="bi bi-pencil me-1"></i> Update Profile Context
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/assistant.js"></script>
+{% endblock %}

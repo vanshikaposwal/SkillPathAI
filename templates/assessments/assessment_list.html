@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Milestone Assessments — Career PathFinder{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1"><i class="bi bi-patch-check-fill text-primary me-2"></i>Milestone Competency Assessments</h2>
+        <p class="text-muted mb-0">Validate your conceptual understanding and unlock advanced modules on your roadmap.</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    {% for a in assessments %}
+    <div class="col-lg-6">
+        <div class="saas-card h-100 p-4 d-flex flex-column justify-content-between">
+            <div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="badge bg-primary">Passing Score: {{ a.passing_score }}%</span>
+                    <small class="text-muted"><i class="bi bi-question-circle me-1"></i>{{ a.questions_count }} Questions</small>
+                </div>
+                <h4 class="fw-bold mb-2">{{ a.title }}</h4>
+                <p class="text-secondary small mb-3">{{ a.description }}</p>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                <span class="text-muted small">
+                    <i class="bi bi-shield-check text-success me-1"></i> Instant Feedback & Explanations
+                </span>
+                <a href="{% url 'assessment_take' pk=a.id %}" class="btn btn-primary-custom btn-sm">
+                    <i class="bi bi-pencil-square me-1"></i> Start Assessment
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5 text-muted">
+        <p>No assessments configured yet.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

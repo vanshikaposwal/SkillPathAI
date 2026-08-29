@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Step {% if step == 2 %}2: Experience{% else %}4: Learning History{% endif %} — Career PathFinder{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-4">
+    <div class="col-lg-8">
+        <!-- Progress Bar Indicator -->
+        <div class="mb-4">
+            <div class="d-flex justify-content-between text-muted small fw-semibold mb-2">
+                <span>Step {{ step }} of 5: {% if step == 2 %}Experience Level{% else %}Learning History & Projects{% endif %}</span>
+                <span>{% if step == 2 %}40%{% else %}80%{% endif %}</span>
+            </div>
+            <div class="progress progress-custom">
+                <div class="progress-bar progress-custom-bar" style="width: {% if step == 2 %}40%{% else %}80%{% endif %};"></div>
+            </div>
+        </div>
+
+        <div class="saas-card p-4 p-md-5">
+            {% if step == 2 %}
+                <div class="text-center mb-4">
+                    <div class="bg-info text-white rounded-circle d-inline-flex p-3 mb-3">
+                        <i class="bi bi-bar-chart-line-fill fs-2"></i>
+                    </div>
+                    <h2 class="fw-bold">What is your current experience level?</h2>
+                    <p class="text-muted">This helps calibrate starting milestones and skip unnecessary basics.</p>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="saas-card p-3 d-block border h-100 cursor-pointer">
+                                <input type="radio" name="experience_level" value="Beginner" class="form-check-input me-2" {% if profile.experience_level == 'Beginner' %}checked{% endif %}>
+                                <strong class="d-block mb-1">Beginner</strong>
+                                <small class="text-muted">Little to no coding experience. Looking to build strong fundamentals from scratch.</small>
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="saas-card p-3 d-block border h-100 cursor-pointer">
+                                <input type="radio" name="experience_level" value="Intermediate" class="form-check-input me-2" {% if profile.experience_level == 'Intermediate' or not profile.experience_level %}checked{% endif %}>
+                                <strong class="d-block mb-1">Intermediate</strong>
+                                <small class="text-muted">Know one or more programming languages, basic syntax, and seeking industry mastery.</small>
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="saas-card p-3 d-block border h-100 cursor-pointer">
+                                <input type="radio" name="experience_level" value="Advanced" class="form-check-input me-2" {% if profile.experience_level == 'Advanced' %}checked{% endif %}>
+                                <strong class="d-block mb-1">Advanced</strong>
+                                <small class="text-muted">Solid computer science foundation, built production apps, ready for architecture.</small>
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="saas-card p-3 d-block border h-100 cursor-pointer">
+                                <input type="radio" name="experience_level" value="Professional" class="form-check-input me-2" {% if profile.experience_level == 'Professional' %}checked{% endif %}>
+                                <strong class="d-block mb-1">Professional (Career Switcher)</strong>
+                                <small class="text-muted">Currently working in tech or adjacent field, aiming for specialized domain transfer.</small>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'onboarding_step' step=1 %}" class="btn btn-outline-secondary px-3"><i class="bi bi-arrow-left me-1"></i> Back</a>
+                        <button type="submit" class="btn btn-primary-custom px-4">Next: Select Skills <i class="bi bi-arrow-right ms-1"></i></button>
+                    </div>
+                </form>
+
+            {% elif step == 4 %}
+                <div class="text-center mb-4">
+                    <div class="bg-success text-white rounded-circle d-inline-flex p-3 mb-3">
+                        <i class="bi bi-journal-check fs-2"></i>
+                    </div>
+                    <h2 class="fw-bold">Your Learning History & Interests</h2>
+                    <p class="text-muted">Tell us about courses you've completed and sub-domains you're excited about.</p>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Completed Courses, Topics, or Certifications</label>
+                        <textarea name="learning_history" rows="3" class="form-control" placeholder="e.g. Completed CS50, freeCodeCamp Responsive Web, Harvard Data Science, built personal portfolio...">{{ profile.learning_history }}</textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Specific Interests & Specializations</label>
+                        <textarea name="interests" rows="3" class="form-control" placeholder="e.g. Distributed microservices, high-throughput systems, Generative AI, cloud cost optimization...">{{ profile.interests }}</textarea>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'onboarding_step' step=3 %}" class="btn btn-outline-secondary px-3"><i class="bi bi-arrow-left me-1"></i> Back</a>
+                        <button type="submit" class="btn btn-primary-custom px-4">Next: Preferences & Pace <i class="bi bi-arrow-right ms-1"></i></button>
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
