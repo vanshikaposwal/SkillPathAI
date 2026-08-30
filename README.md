@@ -1,4 +1,4 @@
-# Career PathFinder 🚀
+# Career PathFinder (Skill Path AI)🚀
 > **From where you are to where you want to be.**
 > *AI-Powered Personalized Learning and Career Recommendation SaaS Platform.*
 
