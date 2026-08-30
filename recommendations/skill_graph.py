@@ -1,0 +1,302 @@
+CAREER_SKILL_GRAPHS = {
+    'Backend Developer': {
+        'category': 'Software Engineering',
+        'icon': 'bi-server',
+        'description': 'Architect, build, and maintain robust server-side applications, microservices, databases, and secure APIs.',
+        'skills': [
+            {'name': 'Java', 'category': 'Languages', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 1, 'prereqs': []},
+            {'name': 'Python', 'category': 'Languages', 'required_level': 'Intermediate', 'importance': 'MEDIUM', 'order': 2, 'prereqs': []},
+            {'name': 'Data Structures & Algorithms', 'category': 'Fundamentals', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 3, 'prereqs': ['Java']},
+            {'name': 'SQL & Relational Databases', 'category': 'Databases', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 4, 'prereqs': []},
+            {'name': 'Git & GitHub', 'category': 'Tools', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 5, 'prereqs': []},
+            {'name': 'HTTP & RESTful APIs', 'category': 'Backend', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 6, 'prereqs': ['Java', 'Data Structures & Algorithms']},
+            {'name': 'Spring Boot', 'category': 'Backend', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 7, 'prereqs': ['Java', 'HTTP & RESTful APIs']},
+            {'name': 'Spring Data JPA & Hibernate', 'category': 'Databases', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 8, 'prereqs': ['Spring Boot', 'SQL & Relational Databases']},
+            {'name': 'Authentication & JWT/OAuth2', 'category': 'Security', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 9, 'prereqs': ['HTTP & RESTful APIs', 'Spring Boot']},
+            {'name': 'Unit Testing & Mockito', 'category': 'Backend', 'required_level': 'Intermediate', 'importance': 'MEDIUM', 'order': 10, 'prereqs': ['Spring Boot']},
+            {'name': 'Docker & Containerization', 'category': 'DevOps', 'required_level': 'Intermediate', 'importance': 'MEDIUM', 'order': 11, 'prereqs': ['Git & GitHub']},
+            {'name': 'CI/CD & Cloud Deployment', 'category': 'DevOps', 'required_level': 'Intermediate', 'importance': 'MEDIUM', 'order': 12, 'prereqs': ['Docker & Containerization']},
+        ],
+        'milestones': [
+            {
+                'title': 'Milestone 1: Backend Foundations & Core Mastery',
+                'description': 'Master core object-oriented programming, exception handling, data structures, and multi-threaded programming.',
+                'hours': 30,
+                'topics': ['Advanced Language Syntax & Collections', 'Object-Oriented Design Principles (SOLID)', 'Data Structures & Algorithms Implementation', 'JDBC Database Connectivity']
+            },
+            {
+                'title': 'Milestone 2: Web Architecture & REST APIs',
+                'description': 'Understand network protocols, request-response lifecycles, JSON serialization, and standard REST API design.',
+                'hours': 35,
+                'topics': ['HTTP Protocols & Status Codes', 'RESTful API Design & Best Practices', 'JSON Serialization & Data Transfer Objects (DTO)', 'API Validation and Global Error Handling']
+            },
+            {
+                'title': 'Milestone 3: Framework Engineering & ORM Integration',
+                'description': 'Build production-grade services utilizing dependency injection, database ORM mapping, and repository layers.',
+                'hours': 40,
+                'topics': ['Spring Boot / Django Core Architecture', 'Dependency Injection & Inversion of Control (IoC)', 'ORM / Spring Data JPA Entities & Repositories', 'Database Migrations & Transaction Management']
+            },
+            {
+                'title': 'Milestone 4: Production Security, Testing & Cloud Deployment',
+                'description': 'Secure endpoints with JWT/OAuth2, write rigorous automated unit and integration tests, and containerize for cloud deployment.',
+                'hours': 35,
+                'topics': ['JWT & Role-Based Access Control', 'Unit & Integration Testing (JUnit/Mockito)', 'Docker Containerization & Docker Compose', 'CI/CD Pipeline & Cloud Deployment (AWS/Render)']
+            }
+        ]
+    },
+    'Frontend Developer': {
+        'category': 'Software Engineering',
+        'icon': 'bi-window-sidebar',
+        'description': 'Build high-performance, accessible, responsive, and interactive user interfaces using modern web technologies.',
+        'skills': [
+            {'name': 'HTML5 & Semantic Markup', 'category': 'Frontend', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 1, 'prereqs': []},
+            {'name': 'CSS3 & Modern Layouts (Flex/Grid)', 'category': 'Frontend', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 2, 'prereqs': ['HTML5 & Semantic Markup']},
+            {'name': 'JavaScript (ES6+)', 'category': 'Languages', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 3, 'prereqs': ['HTML5 & Semantic Markup']},
+            {'name': 'DOM Manipulation & Events', 'category': 'Frontend', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 4, 'prereqs': ['JavaScript (ES6+)']},
+            {'name': 'Git & GitHub', 'category': 'Tools', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 5, 'prereqs': []},
+            {'name': 'Fetch API & Async JavaScript', 'category': 'Frontend', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 6, 'prereqs': ['JavaScript (ES6+)']},
+            {'name': 'React / Modern UI Framework', 'category': 'Frontend', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 7, 'prereqs': ['Fetch API & Async JavaScript', 'DOM Manipulation & Events']},
+            {'name': 'State Management (Redux/Zustand)', 'category': 'Frontend', 'required_level': 'Intermediate', 'importance': 'MEDIUM', 'order': 8, 'prereqs': ['React / Modern UI Framework']},
+            {'name': 'Responsive Design & Tailwind CSS', 'category': 'Frontend', 'required_level': 'Intermediate', 'importance': 'MEDIUM', 'order': 9, 'prereqs': ['CSS3 & Modern Layouts (Flex/Grid)']},
+            {'name': 'Frontend Testing (Jest/Vitest)', 'category': 'Frontend', 'required_level': 'Intermediate', 'importance': 'LOW', 'order': 10, 'prereqs': ['React / Modern UI Framework']},
+            {'name': 'Web Performance & SEO', 'category': 'Frontend', 'required_level': 'Intermediate', 'importance': 'MEDIUM', 'order': 11, 'prereqs': ['React / Modern UI Framework']},
+        ],
+        'milestones': [
+            {
+                'title': 'Milestone 1: Web Foundations & Semantic UI',
+                'description': 'Master semantic HTML5, modern responsive CSS layouts with Flexbox and CSS Grid, and responsive principles.',
+                'hours': 25,
+                'topics': ['Semantic HTML5 Elements', 'CSS3 Flexbox & Grid Systems', 'Responsive Typography & Mobile-First Styling', 'CSS Custom Properties & Design Systems']
+            },
+            {
+                'title': 'Milestone 2: JavaScript Deep Dive & Asynchronous Programming',
+                'description': 'Understand closures, prototypes, event loops, DOM tree manipulation, promises, and async/await.',
+                'hours': 35,
+                'topics': ['ES6+ Features (Destructuring, Arrow Functions, Modules)', 'DOM Tree & Event Delegation', 'Async/Await, Promises & Fetch API', 'Browser Storage (Local/Session Storage)']
+            },
+            {
+                'title': 'Milestone 3: Modern UI Component Architecture',
+                'description': 'Develop dynamic interactive applications with component-driven architecture and state management.',
+                'hours': 40,
+                'topics': ['Component Lifecycle & Hooks', 'State Management & Prop Drilling Solutions', 'Form Handling & Client-Side Validation', 'Routing & Single Page Application (SPA) Flow']
+            },
+            {
+                'title': 'Milestone 4: Performance, Accessibility & Production Build',
+                'description': 'Ensure accessible, blazing-fast web experiences with unit tests, bundle optimizations, and CDN deployment.',
+                'hours': 30,
+                'topics': ['WCAG Web Accessibility Standards', 'Frontend Unit Testing & Component Tests', 'Web Vitals & Performance Optimization', 'Production Bundling & Vercel/Netlify Deployment']
+            }
+        ]
+    },
+    'Full Stack Developer': {
+        'category': 'Software Engineering',
+        'icon': 'bi-layers-half',
+        'description': 'Master both client and server development to build complete end-to-end web applications.',
+        'skills': [
+            {'name': 'HTML5 & Semantic Markup', 'category': 'Frontend', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 1, 'prereqs': []},
+            {'name': 'CSS3 & Modern Layouts (Flex/Grid)', 'category': 'Frontend', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 2, 'prereqs': []},
+            {'name': 'JavaScript (ES6+)', 'category': 'Languages', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 3, 'prereqs': []},
+            {'name': 'Python', 'category': 'Languages', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 4, 'prereqs': []},
+            {'name': 'SQL & Relational Databases', 'category': 'Databases', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 5, 'prereqs': []},
+            {'name': 'Django / Spring Boot', 'category': 'Backend', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 6, 'prereqs': ['Python', 'SQL & Relational Databases']},
+            {'name': 'HTTP & RESTful APIs', 'category': 'Backend', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 7, 'prereqs': ['Django / Spring Boot']},
+            {'name': 'Authentication & JWT/OAuth2', 'category': 'Security', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 8, 'prereqs': ['HTTP & RESTful APIs']},
+            {'name': 'Docker & Containerization', 'category': 'DevOps', 'required_level': 'Intermediate', 'importance': 'MEDIUM', 'order': 9, 'prereqs': ['Git & GitHub']},
+            {'name': 'CI/CD & Cloud Deployment', 'category': 'DevOps', 'required_level': 'Intermediate', 'importance': 'MEDIUM', 'order': 10, 'prereqs': ['Docker & Containerization']},
+        ],
+        'milestones': [
+            {
+                'title': 'Milestone 1: Full Stack Foundations',
+                'description': 'Establish frontend UI basics and server-side language syntax with database queries.',
+                'hours': 30,
+                'topics': ['Responsive HTML/CSS & Modern JS', 'Backend Language Fundamentals', 'Relational Database Schema Design & SQL', 'Version Control & Project Scaffolding']
+            },
+            {
+                'title': 'Milestone 2: Backend Services & API Layer',
+                'description': 'Create scalable REST endpoints with robust data validation and authentication.',
+                'hours': 35,
+                'topics': ['MVC/MVT Architecture', 'REST API Development with DRF / Spring', 'User Authentication & Authorization', 'Database ORM & Migrations']
+            },
+            {
+                'title': 'Milestone 3: Dynamic Frontend & Backend Integration',
+                'description': 'Connect frontend client interfaces seamlessly with backend services and asynchronous states.',
+                'hours': 40,
+                'topics': ['Client-Side Asynchronous Data Fetching', 'Dynamic UI Rendering & Error Handling', 'CRUD Operations with Real-Time Feedback', 'State Synchronization & Optimistic UI']
+            },
+            {
+                'title': 'Milestone 4: Full Stack Deployment & DevOps',
+                'description': 'Containerize the full stack application with databases and configure cloud deployment pipelines.',
+                'hours': 35,
+                'topics': ['Full-Stack Docker Compose Orchestration', 'Environment Variable Security & Secrets', 'Database Backup & Production Tuning', 'Cloud Deployment & Domain Configuration']
+            }
+        ]
+    },
+    'Data Scientist': {
+        'category': 'Data & AI',
+        'icon': 'bi-graph-up-arrow',
+        'description': 'Extract actionable business insights, analyze structured data, build predictive machine learning models.',
+        'skills': [
+            {'name': 'Python', 'category': 'Languages', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 1, 'prereqs': []},
+            {'name': 'NumPy & Numerical Computing', 'category': 'Data & AI', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 2, 'prereqs': ['Python']},
+            {'name': 'Pandas Data Wrangling', 'category': 'Data & AI', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 3, 'prereqs': ['NumPy & Numerical Computing']},
+            {'name': 'Statistics & Probability', 'category': 'Fundamentals', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 4, 'prereqs': []},
+            {'name': 'Data Visualization (Matplotlib/Seaborn)', 'category': 'Data & AI', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 5, 'prereqs': ['Pandas Data Wrangling']},
+            {'name': 'SQL & Relational Databases', 'category': 'Databases', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 6, 'prereqs': []},
+            {'name': 'Machine Learning (Scikit-Learn)', 'category': 'Data & AI', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 7, 'prereqs': ['Statistics & Probability', 'Pandas Data Wrangling']},
+            {'name': 'Feature Engineering', 'category': 'Data & AI', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 8, 'prereqs': ['Machine Learning (Scikit-Learn)']},
+            {'name': 'Model Evaluation & Hyperparameter Tuning', 'category': 'Data & AI', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 9, 'prereqs': ['Machine Learning (Scikit-Learn)']},
+            {'name': 'Model Deployment (Streamlit/FastAPI)', 'category': 'Backend', 'required_level': 'Intermediate', 'importance': 'MEDIUM', 'order': 10, 'prereqs': ['Model Evaluation & Hyperparameter Tuning']},
+        ],
+        'milestones': [
+            {
+                'title': 'Milestone 1: Python for Data & Exploratory Data Analysis (EDA)',
+                'description': 'Clean, reshape, analyze tabular datasets using NumPy and Pandas with statistical charts.',
+                'hours': 30,
+                'topics': ['Vectorized Math with NumPy', 'Data Cleaning & Transformation with Pandas', 'Exploratory Data Analysis & Anomaly Detection', 'Interactive Visualizations with Seaborn & Plotly']
+            },
+            {
+                'title': 'Milestone 2: Statistical Foundations & Advanced SQL Analytics',
+                'description': 'Formulate hypothesis tests, calculate distributions, and perform complex window-function SQL aggregations.',
+                'hours': 30,
+                'topics': ['Descriptive & Inferential Statistics', 'Hypothesis Testing (A/B Testing, Chi-Square, t-Tests)', 'Advanced SQL Aggregations & Window Functions', 'Data Modeling for Analytics']
+            },
+            {
+                'title': 'Milestone 3: Supervised & Unsupervised Machine Learning',
+                'description': 'Train linear models, decision trees, ensemble methods (XGBoost/RandomForest), and clustering models.',
+                'hours': 40,
+                'topics': ['Regression & Classification Algorithms', 'Feature Scaling, Imputation & Encoding', 'Cross-Validation & Metric Tuning (ROC-AUC, F1, RMSE)', 'Unsupervised Learning (K-Means, PCA)']
+            },
+            {
+                'title': 'Milestone 4: End-to-End Data Science Project & Deployment',
+                'description': 'Construct production pipelines and deploy machine learning models as web applications.',
+                'hours': 35,
+                'topics': ['Production Pipeline Construction with Scikit-Learn', 'Model Serialization & API Serving with FastAPI', 'Interactive Dashboard Building with Streamlit', 'Business Storytelling & Technical Reporting']
+            }
+        ]
+    },
+    'AI/ML Engineer': {
+        'category': 'Data & AI',
+        'icon': 'bi-cpu',
+        'description': 'Design, train, fine-tune, and deploy state-of-the-art Deep Learning, NLP, Computer Vision, and Generative AI systems.',
+        'skills': [
+            {'name': 'Python', 'category': 'Languages', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 1, 'prereqs': []},
+            {'name': 'NumPy & Numerical Computing', 'category': 'Data & AI', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 2, 'prereqs': ['Python']},
+            {'name': 'Linear Algebra & Calculus', 'category': 'Fundamentals', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 3, 'prereqs': []},
+            {'name': 'Machine Learning (Scikit-Learn)', 'category': 'Data & AI', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 4, 'prereqs': ['NumPy & Numerical Computing']},
+            {'name': 'PyTorch / Deep Learning', 'category': 'Data & AI', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 5, 'prereqs': ['Linear Algebra & Calculus', 'Machine Learning (Scikit-Learn)']},
+            {'name': 'Neural Network Architectures (CNN/RNN/Transformers)', 'category': 'Data & AI', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 6, 'prereqs': ['PyTorch / Deep Learning']},
+            {'name': 'NLP & Large Language Models (LLMs)', 'category': 'Data & AI', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 7, 'prereqs': ['Neural Network Architectures (CNN/RNN/Transformers)']},
+            {'name': 'MLOps & Model Deployment', 'category': 'DevOps', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 8, 'prereqs': ['PyTorch / Deep Learning']},
+            {'name': 'Vector Databases & RAG Pipelines', 'category': 'Data & AI', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 9, 'prereqs': ['NLP & Large Language Models (LLMs)']},
+        ],
+        'milestones': [
+            {
+                'title': 'Milestone 1: Mathematical Foundations & Classical ML',
+                'description': 'Solidify linear algebra, gradient descent calculus, and scikit-learn algorithmic foundations.',
+                'hours': 30,
+                'topics': ['Matrices, Tensors & Vector Spaces', 'Loss Functions & Gradient Optimization', 'Classical Supervised Algorithms', 'Feature Engineering & Dimensionality Reduction']
+            },
+            {
+                'title': 'Milestone 2: Deep Learning with PyTorch',
+                'description': 'Construct neural network architectures, custom loss functions, backpropagation loops, and optimizers.',
+                'hours': 40,
+                'topics': ['PyTorch Tensor Computation & Autograd', 'Multi-Layer Perceptrons & Regularization (Dropout/BatchNorm)', 'Convolutional Neural Networks (CNNs)', 'Transfer Learning with Pretrained Weights']
+            },
+            {
+                'title': 'Milestone 3: Transformers, NLP & LLMs',
+                'description': 'Understand attention mechanisms, transformer architecture, fine-tuning LLMs, and RAG pipelines.',
+                'hours': 45,
+                'topics': ['Self-Attention & Transformer Architecture', 'HuggingFace Transformers Ecosystem', 'Retrieval-Augmented Generation (RAG) with Vector DBs', 'Prompt Engineering & Structured Outputs']
+            },
+            {
+                'title': 'Milestone 4: MLOps & Production Model Serving',
+                'description': 'Package, optimize (quantization/ONNX), monitor, and serve models with sub-100ms latency.',
+                'hours': 35,
+                'topics': ['Model Serving with FastAPI & Triton/vLLM', 'Docker Containerization for GPU Workloads', 'Experiment Tracking (MLflow/Weights&Biases)', 'Model Monitoring & Drift Detection']
+            }
+        ]
+    },
+    'Cloud Engineer': {
+        'category': 'Cloud & DevOps',
+        'icon': 'bi-cloud-check',
+        'description': 'Provision scalable cloud infrastructure, manage container clusters, automate deployments, and maintain 99.99% uptime.',
+        'skills': [
+            {'name': 'Linux & Bash Scripting', 'category': 'Fundamentals', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 1, 'prereqs': []},
+            {'name': 'Computer Networking & DNS', 'category': 'Fundamentals', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 2, 'prereqs': []},
+            {'name': 'Git & GitHub', 'category': 'Tools', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 3, 'prereqs': []},
+            {'name': 'Cloud Fundamentals (AWS/GCP/Azure)', 'category': 'DevOps', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 4, 'prereqs': ['Linux & Bash Scripting', 'Computer Networking & DNS']},
+            {'name': 'Docker & Containerization', 'category': 'DevOps', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 5, 'prereqs': ['Linux & Bash Scripting']},
+            {'name': 'Kubernetes (K8s) Cluster Orchestration', 'category': 'DevOps', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 6, 'prereqs': ['Docker & Containerization', 'Cloud Fundamentals (AWS/GCP/Azure)']},
+            {'name': 'Infrastructure as Code (Terraform)', 'category': 'DevOps', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 7, 'prereqs': ['Cloud Fundamentals (AWS/GCP/Azure)']},
+            {'name': 'CI/CD Pipelines (GitHub Actions)', 'category': 'DevOps', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 8, 'prereqs': ['Git & GitHub', 'Docker & Containerization']},
+            {'name': 'Cloud Monitoring & Logging (Prometheus/Grafana)', 'category': 'DevOps', 'required_level': 'Intermediate', 'importance': 'MEDIUM', 'order': 9, 'prereqs': ['Kubernetes (K8s) Cluster Orchestration']},
+        ],
+        'milestones': [
+            {
+                'title': 'Milestone 1: Linux Systems & Networking Fundamentals',
+                'description': 'Command line mastery, shell automation, SSH, firewalls, DNS, TCP/IP, and system diagnostics.',
+                'hours': 30,
+                'topics': ['Linux OS Administration & File Systems', 'Bash Scripting & Cron Automation', 'TCP/IP, Subnetting, VPCs & DNS Routing', 'SSH Keys, Permissions & Security Hardening']
+            },
+            {
+                'title': 'Milestone 2: Core Cloud Infrastructure (AWS)',
+                'description': 'Architect resilient cloud VPCs, compute instances (EC2), object storage (S3), and load balancers.',
+                'hours': 35,
+                'topics': ['AWS IAM Policies & Multi-Factor Security', 'Compute & Auto Scaling (EC2, ECS, Lambda)', 'Cloud Storage & Databases (S3, RDS, DynamoDB)', 'Application Load Balancers & CloudFront CDNs']
+            },
+            {
+                'title': 'Milestone 3: Containers & Kubernetes Orchestration',
+                'description': 'Containerize microservices, write Helm charts, and manage Kubernetes clusters.',
+                'hours': 40,
+                'topics': ['Multi-Stage Docker Builds & Image Security', 'Kubernetes Pods, Deployments & Services', 'Ingress Controllers & TLS Cert-Manager', 'StatefulSets & Persistent Volume Claims']
+            },
+            {
+                'title': 'Milestone 4: Infrastructure as Code & Automated CI/CD',
+                'description': 'Declaratively manage cloud infrastructure via Terraform and automate zero-downtime releases.',
+                'hours': 35,
+                'topics': ['Terraform State, Modules & Providers', 'GitHub Actions CI/CD for Containerized Apps', 'Prometheus Metrics & Grafana Dashboards', 'Cloud Cost Optimization & Disaster Recovery']
+            }
+        ]
+    },
+    'Cybersecurity Analyst': {
+        'category': 'Cybersecurity',
+        'icon': 'bi-shield-lock',
+        'description': 'Protect systems and networks, identify vulnerabilities, monitor security information events (SIEM), and mitigate breaches.',
+        'skills': [
+            {'name': 'Computer Networking & DNS', 'category': 'Fundamentals', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 1, 'prereqs': []},
+            {'name': 'Linux & Bash Scripting', 'category': 'Fundamentals', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 2, 'prereqs': []},
+            {'name': 'Security Fundamentals & Threat Modeling', 'category': 'Security', 'required_level': 'Advanced', 'importance': 'HIGH', 'order': 3, 'prereqs': []},
+            {'name': 'Authentication & JWT/OAuth2', 'category': 'Security', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 4, 'prereqs': ['Security Fundamentals & Threat Modeling']},
+            {'name': 'Vulnerability Analysis & Penetration Testing', 'category': 'Security', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 5, 'prereqs': ['Computer Networking & DNS', 'Linux & Bash Scripting']},
+            {'name': 'SIEM & Security Log Analysis (Splunk/ELK)', 'category': 'Security', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 6, 'prereqs': ['Security Fundamentals & Threat Modeling']},
+            {'name': 'Incident Response & Forensics', 'category': 'Security', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 7, 'prereqs': ['SIEM & Security Log Analysis (Splunk/ELK)']},
+            {'name': 'Security Tools (Wireshark, Nmap, Burp Suite)', 'category': 'Security', 'required_level': 'Intermediate', 'importance': 'HIGH', 'order': 8, 'prereqs': ['Computer Networking & DNS']},
+        ],
+        'milestones': [
+            {
+                'title': 'Milestone 1: Networking & Systems Security Foundations',
+                'description': 'Packet sniffing, OSI model inspection, protocol security, and operating system hardening.',
+                'hours': 30,
+                'topics': ['Packet Analysis with Wireshark', 'Port Scanning & Service Fingerprinting with Nmap', 'Firewalls, IPTables & Network Segmentation', 'Linux & Windows Security Hardening']
+            },
+            {
+                'title': 'Milestone 2: Web & Application Vulnerability Assessment',
+                'description': 'Discover OWASP Top 10 vulnerabilities (SQLi, XSS, CSRF, SSRF) using automated and manual tools.',
+                'hours': 35,
+                'topics': ['OWASP Top 10 Web Vulnerabilities', 'Burp Suite Proxy & Request Tampering', 'Authentication Flaws & Session Hijacking', 'Vulnerability Scanning & CVE Analysis']
+            },
+            {
+                'title': 'Milestone 3: Security Operations, SIEM & Threat Hunting',
+                'description': 'Configure centralized logging, detect intrusion patterns, and analyze suspicious behavior in SIEMs.',
+                'hours': 40,
+                'topics': ['SIEM Deployment & Log Parsing (Splunk/Wazuh)', 'Snort / Suricata IDS/IPS Configuration', 'Threat Intelligence Feeds & IOC Matching', 'Anomaly Detection & Lateral Movement Tracking']
+            },
+            {
+                'title': 'Milestone 4: Incident Response & Digital Forensics',
+                'description': 'Execute incident response playbooks, isolate infected nodes, preserve forensic artifacts, and write root-cause reports.',
+                'hours': 35,
+                'topics': ['NIST Incident Response Lifecycle (PICERL)', 'Memory Forensics with Volatility', 'Disk Image Capture & Chain of Custody', 'Post-Mortem Reporting & Remediation Strategy']
+            }
+        ]
+    }
+}
