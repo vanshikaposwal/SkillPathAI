@@ -1,0 +1,43 @@
+[
+  {
+    "title": "Employee Management REST API",
+    "difficulty": "Beginner",
+    "estimated_hours": 10,
+    "skills": [
+      "Java",
+      "SQL",
+      "REST"
+    ]
+  },
+  {
+    "title": "TaskFlow: Kanban Microservice",
+    "difficulty": "Intermediate",
+    "estimated_hours": 15,
+    "skills": [
+      "Spring Boot",
+      "JWT",
+      "JPA"
+    ]
+  },
+  {
+    "title": "Customer Churn Prediction Pipeline",
+    "difficulty": "Intermediate",
+    "estimated_hours": 16,
+    "skills": [
+      "Python",
+      "Pandas",
+      "Scikit-Learn"
+    ]
+  },
+  {
+    "title": "RAG Document Search with LLMs",
+    "difficulty": "Advanced",
+    "estimated_hours": 20,
+    "skills": [
+      "Python",
+      "PyTorch",
+      "Transformers",
+      "Vector DB"
+    ]
+  }
+]
